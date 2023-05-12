@@ -111,9 +111,7 @@ def execute_compiler(file: str, options, define=None):
     ]
 
     if define:
-        args.append('-D')
-        args.append(f'{define}')
-
+        args.extend(('-D', f'{define}'))
     ret = subprocess.run(args, capture_output=True)
     if ret.returncode != 0:
         print(ret.stderr)

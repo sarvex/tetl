@@ -55,11 +55,11 @@ headers = [
 ]
 
 for header in headers:
-    filenames = []
-    for file in os.listdir(f'./include/etl/_{header}'):
-        if file.endswith('.hpp'):
-            filenames.append(os.path.join(f'./include/etl/_{header}', file))
-
+    filenames = [
+        os.path.join(f'./include/etl/_{header}', file)
+        for file in os.listdir(f'./include/etl/_{header}')
+        if file.endswith('.hpp')
+    ]
     header_content = ''
 
     for names in filenames:
@@ -81,9 +81,9 @@ for header in headers:
         '/// Distributed under the Boost So',
         '/// See accompanying file LICENSE or'
     ]
-    with open(f'cmake-build-doxygen/pre/{header}.hpp') as oldfile, open(f'cmake-build-doxygen/etl/{header}.hpp', 'w') as newfile:
+    with (open(f'cmake-build-doxygen/pre/{header}.hpp') as oldfile, open(f'cmake-build-doxygen/etl/{header}.hpp', 'w') as newfile):
         newfile.write(f'/// \\addtogroup {header}\n///  @{{\n\n')
         for line in oldfile:
-            if not any(bad_word in line for bad_word in bad_words):
+            if all(bad_word not in line for bad_word in bad_words):
                 newfile.write(line)
         newfile.write('/// @}\n\n')

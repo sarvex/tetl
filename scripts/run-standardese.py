@@ -27,7 +27,7 @@ def main():
     for entry in os.scandir(directory):
         if (entry.path.endswith(".html") and entry.is_file()):
             replace(entry.path, r'<body>', r'<body class="container">')
-            replace(entry.path, r'</body>', bootstrap_urls() + r'</body>')
+            replace(entry.path, r'</body>', f'{bootstrap_urls()}</body>')
             replace(entry.path, r'standardese-language-cpp',
                     r'standardese-language-cpp language-cpp')
 
